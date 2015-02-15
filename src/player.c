@@ -116,8 +116,15 @@ int player_move(struct player* player, struct map* map) {
 	switch (player->current_direction) {
 	case NORTH:
 		if (player_move_aux(player, map, x, y - 1)) {
-			player->y--;
-			move = 1;
+			if (map_get_cell_type(map, x, y-1)==CELL_CASE && map_get_cell_type(map, x, y-2)!=CELL_EMPTY && player_move_aux(player, map, x, y - 1)){
+				player->y--;
+				map_set_cell_type(map, x, y-2, CELL_CASE);
+				move = 1;
+			}
+			else{
+				player->y--;
+				move = 1;
+			}
 		}
 		break;
 

@@ -147,6 +147,9 @@ void map_display(struct map* map)
 			case CELL_CLOSED_DOOR:
 				window_display_image(sprite_get_closed_door(), x, y);
 				break;
+			case CELL_MONSTER:
+				window_display_image(sprite_get_monster(SOUTH), x, y);
+				break;
 			}
 		}
 
