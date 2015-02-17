@@ -116,10 +116,12 @@ int player_move(struct player* player, struct map* map) {
 	switch (player->current_direction) {
 	case NORTH:
 		if (player_move_aux(player, map, x, y - 1)) {
-			if (map_get_cell_type(map, x, y-1)==CELL_CASE && map_get_cell_type(map, x, y-2)!=CELL_EMPTY && player_move_aux(player, map, x, y - 1)){
-				player->y--;
-				map_set_cell_type(map, x, y-2, CELL_CASE);
-				move = 1;
+			if (map_get_cell_type(map, x, y-1)==CELL_CASE){
+				if (map_is_inside(map, x, y-2) && map_get_cell_type(map, x, y-2)==CELL_EMPTY){
+					player->y--;
+					map_set_cell_type(map, x, y-2, CELL_CASE);
+					move = 1;
+				}
 			}
 			else{
 				player->y--;
@@ -130,22 +132,49 @@ int player_move(struct player* player, struct map* map) {
 
 	case SOUTH:
 		if (player_move_aux(player, map, x, y + 1)) {
-			player->y++;
-			move = 1;
+			if (map_get_cell_type(map, x, y+1)==CELL_CASE){
+				if (map_is_inside(map, x, y+2) && map_get_cell_type(map, x, y+2)==CELL_EMPTY){
+					player->y++;
+					map_set_cell_type(map, x, y+2, CELL_CASE);
+					move = 1;
+				}
+			}
+			else{
+				player->y++;
+				move = 1;
+			}
 		}
 		break;
 
 	case WEST:
 		if (player_move_aux(player, map, x - 1, y)) {
-			player->x--;
-			move = 1;
+			if (map_get_cell_type(map, x-1, y)==CELL_CASE){
+				if (map_is_inside(map, x-2, y) && map_get_cell_type(map, x-2, y)==CELL_EMPTY){
+					player->x--;
+					map_set_cell_type(map, x-2, y, CELL_CASE);
+					move = 1;
+				}
+			}
+			else{
+				player->x--;
+				move = 1;
+			}
 		}
 		break;
 
 	case EAST:
 		if (player_move_aux(player, map, x + 1, y)) {
-			player->x++;
-			move = 1;
+			if (map_get_cell_type(map, x+1, y)==CELL_CASE){
+				if (map_is_inside(map, x+2, y) && map_get_cell_type(map, x+2, y)==CELL_EMPTY){
+					player->x++;
+					map_set_cell_type(map, x+2, y, CELL_CASE);
+					move = 1;
+				}
+			}
+			else{
+				player->x++;
+				move = 1;
+			}
 		}
 		break;
 	}

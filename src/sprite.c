@@ -177,6 +177,7 @@ void sprite_load() {
 	bonus_load();
 	banner_load();
 	player_load();
+	monster_load(); //ADDED
 }
 
 void sprite_free() {
@@ -184,6 +185,7 @@ void sprite_free() {
 	bonus_unload();
 	banner_unload();
 	player_unload();
+	monster_unload(); //ADDED
 }
 
 SDL_Surface* sprite_get_number(short number) {
