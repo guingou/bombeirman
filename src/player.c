@@ -200,8 +200,12 @@ int player_move(struct player* player, struct map* map) {
 	}
 
 	if (move) {
-		map_set_cell_type(map, x, y, CELL_EMPTY);
-		map_set_cell_type(map, player->x, player->y, CELL_PLAYER);
+		if (map_get_cell_type(map, x, y) == CELL_BOMB)
+			map_set_cell_type(map, player->x, player->y, CELL_PLAYER);
+		else{
+			map_set_cell_type(map, x, y, CELL_EMPTY);
+			map_set_cell_type(map, player->x, player->y, CELL_PLAYER);
+		}
 	}
 	return move;
 }

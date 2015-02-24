@@ -152,7 +152,7 @@ void map_display(struct map* map)
 				break;
 			case CELL_BOMB:
 				window_display_image(sprite_get_bomb(3),
-							x * SIZE_BLOC, y * SIZE_BLOC);
+							x, y);
 				break;
 			}
 		}
