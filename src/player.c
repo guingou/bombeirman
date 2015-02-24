@@ -2,6 +2,7 @@
 #include <assert.h>
 
 #include <player.h>
+#include <bomb.h>
 #include <sprite.h>
 #include <window.h>
 #include <misc.h>
@@ -10,6 +11,7 @@
 struct player {
 	int x, y;
 	enum direction current_direction;
+	int power;
 	int nb_bomb;
 };
 
@@ -20,6 +22,7 @@ struct player* player_init(int bomb_number) {
 
 	player->current_direction = SOUTH;
 	player->nb_bomb = bomb_number;
+	player->power = 1;
 
 	return player;
 }
@@ -44,6 +47,11 @@ void player_set_current_way(struct player* player, enum direction way) {
 	player->current_direction = way;
 }
 
+int player_get_power(struct player* player){
+	assert(player);
+	return player->power;
+}
+
 int player_get_nb_bomb(struct player* player) {
 	assert(player);
 	return player->nb_bomb;
@@ -57,6 +65,13 @@ void player_inc_nb_bomb(struct player* player) {
 void player_dec_nb_bomb(struct player* player) {
 	assert(player);
 	player->nb_bomb -= 1;
+}
+
+void player_set_bomb(struct player* player, struct map* map){
+	assert(player);
+	int x = player_get_x(player);
+	int y = player_get_y(player);
+	map_set_cell_type(map, x, y, CELL_BOMB);
 }
 
 void player_from_map(struct player* player, struct map* map) {
@@ -98,6 +113,11 @@ static int player_move_aux(struct player* player, struct map* map, int x, int y)
 		break;
 
 	case CELL_PLAYER:
+		return 0; //ADDED
+		break;
+
+	case CELL_BOMB: //ADDED
+		return 0;
 		break;
 
 	default:

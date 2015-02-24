@@ -80,6 +80,9 @@ SDL_Surface* player_img[4];
 // monster ADDED
 SDL_Surface* monster_img[4];
 
+// bomb ADDED
+SDL_Surface* bomb_img[4];
+
 
 void banner_load() {
 	// numbers imgs
@@ -172,12 +175,25 @@ void monster_unload() {
 	//ADDED
 }
 
+void bomb_load(){
+	bomb_img[0] = load_image(BOMB_TTL1);
+	bomb_img[1] = load_image(BOMB_TTL2);
+	bomb_img[2] = load_image(BOMB_TTL3);
+	bomb_img[3] = load_image(BOMB_TTL4);
+}
+
+void bomb_unload(){
+	for (int i=0; i<4; i++)
+		SDL_FreeSurface(bomb_img[i]);
+}
+
 void sprite_load() {
 	map_load();
 	bonus_load();
 	banner_load();
 	player_load();
-	monster_load(); //ADDED
+	monster_load();//ADDED
+	bomb_load(); //ADDED
 }
 
 void sprite_free() {
@@ -186,6 +202,7 @@ void sprite_free() {
 	banner_unload();
 	player_unload();
 	monster_unload(); //ADDED
+	bomb_unload(); //ADDED
 }
 
 SDL_Surface* sprite_get_number(short number) {
@@ -201,6 +218,12 @@ SDL_Surface* sprite_get_player(enum direction direction) {
 SDL_Surface* sprite_get_monster(enum direction direction) {
 	assert(monster_img[direction]);
 	return monster_img[direction];
+	//ADDED
+}
+
+SDL_Surface* sprite_get_bomb(int timer){
+	assert(bomb_img[timer]);
+	return bomb_img[timer];
 	//ADDED
 }
 
