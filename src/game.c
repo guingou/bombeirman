@@ -2,6 +2,7 @@
 #include <time.h>
 
 #include <game.h>
+#include <bomb.h>
 #include <misc.h>
 #include <window.h>
 #include <sprite.h>
@@ -9,6 +10,7 @@
 struct game {
 	struct level* curr_level; // current level
 	struct player* player;
+	struct bomb* bomb;
 };
 
 struct game* game_new(void) {
@@ -20,6 +22,7 @@ struct game* game_new(void) {
 	game->player = player_init(1);
 	player_from_map(game->player, level_get_map(game->curr_level, 0)); // get x,y of the player on the first map
 
+	game->bomb = bomb_init();
 	return game;
 }
 
@@ -37,6 +40,10 @@ struct player* game_get_player(struct game* game) {
 
 struct level* game_get_curr_level(struct game* game) {
 	return game->curr_level;
+}
+
+struct bomb* game_get_bomb(struct game* game){
+	return game->bomb;
 }
 
 void game_banner_display(struct game* game) {
@@ -86,6 +93,7 @@ short input_keyboard(struct game* game) {
 	SDL_Event event;
 	struct player* player = game_get_player(game);
 	struct map* map = level_get_curr_map(game_get_curr_level(game));
+	struct bomb* bomb = game_get_bomb(game);
 
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
@@ -112,7 +120,7 @@ short input_keyboard(struct game* game) {
 				player_move(player, map);
 				break;
 			case SDLK_SPACE:
-				player_set_bomb(player, map);
+				player_set_bomb(player, map, bomb);
 				break;
 			default:
 				break;

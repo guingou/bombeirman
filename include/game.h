@@ -19,6 +19,9 @@ struct player* game_get_player(struct game* game);
 // Return the current level
 struct level* game_get_curr_level(struct game* game);
 
+//Return the game's Bomb
+struct bomb* game_get_bomb(struct game* game);
+
 // Display the game on the screen
 void game_display(struct game* game);
 

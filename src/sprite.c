@@ -206,8 +206,11 @@ void sprite_free() {
 }
 
 SDL_Surface* sprite_get_number(short number) {
-	assert(number >= 0 && number < 9);
-	return numbers[number];
+	assert(number < 9);
+	if (number >= 0)
+		return numbers[number];
+	else
+		return numbers[0];
 }
 
 SDL_Surface* sprite_get_player(enum direction direction) {

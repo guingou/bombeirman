@@ -1,6 +1,8 @@
 #ifndef MAP_H_
 #define MAP_H_
 
+#include <bomb.h>//ADDED
+
 enum cell_type {
 	CELL_EMPTY=0,
 	CELL_GOAL,  // 1
@@ -51,6 +53,7 @@ void map_free(struct map* map);
 // Return the height and width of a map
 int map_get_width(struct map* map);
 int map_get_height(struct map* map);
+struct bomb* map_get_bomb(struct map* map); //ADDED
 
 // Return the type of a cell
 enum cell_type map_get_cell_type(struct map* map, int x, int y);

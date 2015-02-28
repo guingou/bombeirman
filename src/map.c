@@ -151,7 +151,7 @@ void map_display(struct map* map)
 				window_display_image(sprite_get_monster(SOUTH), x, y);
 				break;
 			case CELL_BOMB:
-				window_display_image(sprite_get_bomb(3),
+				window_display_image(sprite_get_bomb(0),
 							x, y);
 				break;
 			}

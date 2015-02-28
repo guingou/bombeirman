@@ -67,11 +67,17 @@ void player_dec_nb_bomb(struct player* player) {
 	player->nb_bomb -= 1;
 }
 
-void player_set_bomb(struct player* player, struct map* map){
+void player_set_bomb(struct player* player, struct map* map, struct bomb* bomb){
 	assert(player);
-	int x = player_get_x(player);
-	int y = player_get_y(player);
-	map_set_cell_type(map, x, y, CELL_BOMB);
+	assert(map);
+	assert(bomb);
+	if (player_get_nb_bomb(player) > 0){
+		int x = player_get_x(player);
+		int y = player_get_y(player);
+		map_set_cell_type(map, x, y, CELL_BOMB);
+		bomb_add(bomb, player);
+		player_dec_nb_bomb(player);
+	}
 }
 
 void player_from_map(struct player* player, struct map* map) {

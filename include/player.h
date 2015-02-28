@@ -2,9 +2,12 @@
 #define PLAYER_H_
 
 #include <map.h>
+#include <bomb.h>
 #include <constant.h>
 
 struct player;
+struct bomb;
+struct map;
 
 // Creates a new player with a given number of available bombs
 struct player* player_init(int bomb_number);
@@ -22,7 +25,7 @@ int player_get_power(struct player* player);
 int  player_get_nb_bomb(struct player * player);
 void player_inc_nb_bomb(struct player * player);
 void player_dec_nb_bomb(struct player * player);
-void player_set_bomb(struct player* player, struct map* map);
+void player_set_bomb(struct player* player, struct map* map, struct bomb* bomb);
 
 // Load the player position from the map
 void player_from_map(struct player* player, struct map* map);
